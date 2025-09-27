@@ -1,16 +1,23 @@
-from models.chatroom import ChatRoom
-from models.user import User
+from builders.automovil_builder import AutomovilBuilder
+from directors.automovil_director import AutomovilDirector
+from enums import TipoMotor, Color
+
+
+def main() -> None:
+    # Usando director (presets)
+    director = AutomovilDirector(AutomovilBuilder())
+    auto_deportivo = director.deportivo()
+    print(auto_deportivo)
+
+    # Configuración ad-hoc con el builder
+    auto_personalizado = (
+        AutomovilBuilder()
+        .set_motor(TipoMotor.ELECTRICO)
+        .set_color(Color.NEGRO)
+        .set_gps()
+        .build()
+    )
+    print(auto_personalizado)
 
 if __name__ == "__main__":
-    chat = ChatRoom()
-    alice = User("Alice")
-    bob = User("Bob")
-    carol = User("Carol")
-
-    chat.register(alice)
-    chat.register(bob)
-    chat.register(carol)
-
-    alice.send("Hola a todos!")
-    bob.send("Hola Alice!")
-    carol.send("¿Qué tal?")
+    main()
